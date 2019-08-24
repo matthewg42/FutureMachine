@@ -25,6 +25,10 @@ ARDUINO_LIBS = Mutila SoftwareSerial
 # Pro Mini 5V
 #BOARD_TAG = pro
 #BOARD_SUB = 16MHzatmega328
+#
+# Arduino MEGA 2560
+BOARD_TAG = mega
+BOARD_SUB = atmega2560
 
 include ../arduino.mk
 
