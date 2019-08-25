@@ -2,7 +2,7 @@
 #include <MutilaDebug.h>
 #include "MultiThrowSwitch.h"
 
-MultiThrowSwitch::MultiThrowSwitch(uint8_t throws, uint8_t pins[], bool pullup) : 
+MultiThrowSwitch::MultiThrowSwitch(uint8_t throws, const uint8_t pins[], bool pullup) : 
 	_throws(throws),
 	_pos(0)
 {

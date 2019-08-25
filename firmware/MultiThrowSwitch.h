@@ -24,13 +24,13 @@ public:
      * it is preferred as a floating pin will revert to off
      * more readily than with non-pullup logic.
      */
-    MultiThrowSwitch(uint8_t throws, uint8_t pins[], bool pullup=true);
+    MultiThrowSwitch(uint8_t throws, const uint8_t pins[], bool pullup=true);
 
 	/* Destructor.
 	 *
 	 * Will delete dynamically allocated DebouncedButton objects 
 	 */
-	~MultiThrowSwitch();
+	virtual ~MultiThrowSwitch();
 
     /*! Initialization.
      *

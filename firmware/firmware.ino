@@ -10,8 +10,9 @@
 #include "FutureDial.h"
 #include "RecordButton.h"
 #include "CrankMonitor.h"
+#include "AltLever.h"
 
-const uint16_t OutputPeriodMs = 500;
+const uint16_t OutputPeriodMs = 200;
 uint32_t LastOutputMs = 0;
 
 void setup()
@@ -25,6 +26,11 @@ void setup()
     FutureDial.begin();
     RecordButton.begin();
     CrankMonitor.begin();
+    AltLever.addRange(0, 200);
+    AltLever.addRange(200, 400);
+    AltLever.addRange(400, 600);
+    AltLever.addRange(600, 800);
+    AltLever.begin();
     pinMode(53, OUTPUT);
     digitalWrite(53, HIGH);
     DBLN(F("E:setup"));
@@ -40,6 +46,7 @@ void loop()
     FutureDial.update();
     RecordButton.update();
     CrankMonitor.update();
+    AltLever.update();
 
     if (DoEvery(OutputPeriodMs, LastOutputMs)) {
         DB("LEV");
@@ -62,6 +69,14 @@ void loop()
 
         DB(" CRA=");
         DB(CrankMonitor.on());
+
+        DB(" ALT[value=");
+        DB(AltLever.value());
+        DB(" velocity=");
+        DB(AltLever.velocity());
+        DB(" raw=");
+        DB(analogRead(A15));
+        DB(']');
 
         DB(" mem=");
         DBLN(FreeRam());

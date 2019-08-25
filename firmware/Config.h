@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Arduino.h>
 #include <stdint.h>
 
 const uint8_t HEARTBEAT_PIN         = 13;
@@ -51,5 +52,7 @@ const uint8_t CRA_PIN		= 51;
 const uint8_t WEA_RX_PIN	= 18;
 const uint8_t WEA_TX_PIN	= 19;
 
+// Experimental POT
+const uint8_t ALTLEV_PIN    = A15;
 
 
