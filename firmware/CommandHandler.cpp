@@ -45,9 +45,9 @@ void CommandHandlerClass::runCmd()
 		} else if (arg == "flash") {
 			RecordIndicator.setMode(Heartbeat::Normal);
 		} else if (arg == "slowflash") {
-			RecordIndicator.setMode(Heartbeat::Slow);
+			RecordIndicator.setCustomMode(750, 500);
 		} else if (arg == "quickflash") {
-			RecordIndicator.setMode(Heartbeat::Quick);
+			RecordIndicator.setCustomMode(50, 50);
 		} else {
 			_stream->print(F("# ERROR: invalid argument to rec command: '"));
 			_stream->print(arg);
