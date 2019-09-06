@@ -4,13 +4,13 @@
 #include <stdint.h>
 
 // Weather station settings
-#define HC12Serial Serial1
+#define HC12Serial Serial3
 const long HC12Baud							= 4800;
 const uint16_t WeatherReceiverTimeoutMs 	= 200;
 const uint8_t WeatherPacketMagic[]      	= { 0x12, 0x13 };
 
 // Pins
-const uint8_t HC12SetPin					= 20;
+const uint8_t HC12SetPin					= 2;
 const uint8_t HeartbeatPin	    			= 13;
 const uint8_t LeverPins[] 					= { 22, 23, 24 };
 const uint8_t EarthDialPins[] 				= { 26, 27, 28, 29 };
