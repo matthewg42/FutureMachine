@@ -1,4 +1,4 @@
-# Future Machine Arduono Firmware
+# Future Machine Arduino Firmware
 
 ## Pre-requisites
 
