@@ -24,7 +24,7 @@ public:
      * it is preferred as a floating pin will revert to off
      * more readily than with non-pullup logic.
      */
-    MultiThrowSwitch(uint8_t throws, const uint8_t pins[], bool pullup=true);
+    MultiThrowSwitch(uint8_t throws, const uint8_t pins[], bool useOff=false, bool pullup=true);
 
 	/* Destructor.
 	 *
@@ -60,6 +60,7 @@ public:
 
 private:
 	uint8_t _throws;
+	bool _useOff;
     DebouncedButton** _buttons;
 	uint8_t _pos;
 

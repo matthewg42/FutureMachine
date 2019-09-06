@@ -2,6 +2,8 @@
 #include <MutilaDebug.h>
 #include <Millis.h>
 #include <FreeRam.h>
+
+#include "Config.h"
 #include "HeartBeat.h"
 #include "Lever.h"
 #include "EarthDial.h"
@@ -11,14 +13,19 @@
 #include "RecordButton.h"
 #include "CrankMonitor.h"
 #include "AltLever.h"
+#include "WeatherReceiver.h"
 
 const uint16_t OutputPeriodMs = 200;
+const uint16_t UpdatePeriodMs = 25;
+uint32_t LastUpdateMs = 0;
 uint32_t LastOutputMs = 0;
 
 void setup()
 {
     Serial.begin(115200);
+    DBLN(F("S:setup"));
     HeartBeat.begin();
+    WeatherReceiver.begin();
     Lever.begin();
     EarthDial.begin();
     SeasonDial.begin();
@@ -33,53 +40,45 @@ void setup()
     AltLever.begin();
     pinMode(53, OUTPUT);
     digitalWrite(53, HIGH);
+
+    Serial.println(F("#INPUT,Lever,Earth,Season,Mood,Future,Record,Crank"));
+    WeatherReceiver.printFields();
     DBLN(F("E:setup"));
 }
 
 void loop()
 {
-    HeartBeat.update();
-    Lever.update();
-    EarthDial.update();
-    SeasonDial.update();
-    MoodDial.update();
-    FutureDial.update();
-    RecordButton.update();
-    CrankMonitor.update();
-    AltLever.update();
+    if (DoEvery(UpdatePeriodMs, LastUpdateMs)) {
+        HeartBeat.update();
+        WeatherReceiver.update();
+        Lever.update();
+        EarthDial.update();
+        SeasonDial.update();
+        MoodDial.update();
+        FutureDial.update();
+        RecordButton.update();
+        CrankMonitor.update();
+        AltLever.update();
+    }
 
     if (DoEvery(OutputPeriodMs, LastOutputMs)) {
-        DB("LEV");
-        DB(Lever.position());
-
-        DB(" EAR");
-        DB(EarthDial.position());
-
-        DB(" SEA");
-        DB(SeasonDial.position());
-
-        DB(" MOO");
-        DB(MoodDial.position());
-
-        DB(" FUT=");
-        DB(FutureDial.position());
-
-        DB(" REC=");
-        DB(RecordButton.on());
-
-        DB(" CRA=");
-        DB(CrankMonitor.on());
-
-        DB(" ALT[value=");
-        DB(AltLever.value());
-        DB(" velocity=");
-        DB(AltLever.velocity());
-        DB(" raw=");
-        DB(analogRead(A15));
-        DB(']');
-
-        DB(" mem=");
-        DBLN(FreeRam());
+        Serial.print(F("INPUT,"));
+        Serial.print(Lever.position());
+        Serial.print(',');
+        Serial.print(EarthDial.position());
+        Serial.print(',');
+        Serial.print(SeasonDial.position());
+        Serial.print(',');
+        Serial.print(MoodDial.position());
+        Serial.print(',');
+        Serial.print(FutureDial.position());
+        Serial.print(',');
+        Serial.print(RecordButton.on());
+        Serial.print(',');
+        Serial.print(CrankMonitor.on());
+        Serial.println();
     }
+
 }
+
 

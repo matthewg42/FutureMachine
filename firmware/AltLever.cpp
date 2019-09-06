@@ -5,7 +5,7 @@
 #include "Config.h"
 #include "AltLever.h"
 
-AltLeverClass AltLever(ALTLEV_PIN, 4);
+AltLeverClass AltLever(AltLeverPin, 4);
 
 AltLeverClass::AltLeverClass(const uint8_t pin, int8_t maxRanges) :
     _pin(pin),
