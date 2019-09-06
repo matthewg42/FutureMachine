@@ -36,53 +36,58 @@ Software Elements
 * Serial reader for USB connection
 * Serial sender for USB connection
 
-Data Format
------------
+Serial Output
+-------------
 
-When an input state changes, it shall be relayed to the "Brain" over the USB serial connection.
-
-On boot, outputs record format comments:
+The device outputs over USB serial at baud 115200.  On boot, prints values for persistent 
+settings, and the record of the main two output records:
 
 ```
-#INPUT,Lever,Earth,Season,Mood,Future,Record,Crank
-#WEATHER,temperatureC,moisture,windSpeedMs,rainFallMmMinute,rainFallMmHour,rainFallMmDay
+# Settings loaded from EEPROM
+# Settings:
+# - InputDisplayPeriodMs = 250 [default]
+# INPUT,Lever,Earth,Season,Mood,Future,Record,Crank
+# WEATHER,temperatureC,moisture,windSpeedMs,rainFallMmMinute,rainFallMmHour,rainFallMmDay
 ```
 
 Periodically prints the state of the system inputs:
 
 ```
-INPUT,1,2,1,6,4,0,0
+INPUT,1,2,1,6,4,0,1
 ```
 
-Expect instructions from Brain about turning on and off LED like this: LED0, LED1
+Which would be interpretted as:
 
-Example Serial Output
----------------------
+* Lever in position 1
+* Earth dial in position 2
+* Season dial in position 1
+* Mood dial in position 6
+* Future Myth dial in position 4
+* Record button not pressed
+* Crank is active
 
-RESET
-LEV1
-EAR1
-SEA3
-MOO7
-FUT1
-REC0
-CRA0
-WEA,T=14.6,H=67,W=4.6,P=1004,R=0.1
-LEV2
+When weather data is received from the remote weather station, the weather record is output:
 
+```
+WEATHER,20.37,0,0.00,0.00,0.00,0.00
+```
 
+Which would be interpretted as:
 
+* Temperature is 20.37 degrees C
+* Moisture sensor does not detect moisture
+* Wind speed is 0 m/s
+* There has been no rainfall in the last minute
+* There has been no rainfall in the last hour
+* There has been no rainfall in the last day
 
+Serial Input
+------------
 
+Textual commands may be sent to the device over USB serial at 115200. Valid commands:
 
-Handle incoming events,and forward to Brain with 
-
-* Serial from HC12
-* Serial from USB
-
-
-
-
-
-
+* `help` - print a help message to the serial device
+* `settings` - display the currrent persistent settings (those which are saved to EEPROM)
+* `reset` - reset factory detail settings and save to EEPROM
+* `input [ms]` - change the period the INPUT record is displayed (parameter in milliseconds)
 
