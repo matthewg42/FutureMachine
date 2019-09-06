@@ -1,8 +1,16 @@
+// Arduino includes - must include any library used here, even if only used in
+// a separate source, as the Arduino IDE uses this list to decide what libs
+// to link...
 #include <Arduino.h>
+#include <EEPROM.h>
+#include <SoftwareSerial.h>
+
+// Mutila includes
 #include <MutilaDebug.h>
 #include <Millis.h>
 #include <FreeRam.h>
 
+// Project objects
 #include "Config.h"
 #include "HeartBeat.h"
 #include "Lever.h"
@@ -12,13 +20,14 @@
 #include "FutureDial.h"
 #include "RecordButton.h"
 #include "CrankMonitor.h"
-#include "AltLever.h"
 #include "WeatherReceiver.h"
+#include "CommandHandler.h"
+#include "Settings.h"
 
-const uint16_t OutputPeriodMs = 200;
-const uint16_t UpdatePeriodMs = 25;
+// Globals for timers
+uint16_t UpdatePeriodMs = 20;
 uint32_t LastUpdateMs = 0;
-uint32_t LastOutputMs = 0;
+uint32_t LastInputDisplayMs = 0;
 
 void setup()
 {
@@ -26,6 +35,8 @@ void setup()
     DBLN(F("S:setup"));
     HeartBeat.begin();
     WeatherReceiver.begin();
+    CommandHandler.begin(Serial);
+
     Lever.begin();
     EarthDial.begin();
     SeasonDial.begin();
@@ -33,24 +44,22 @@ void setup()
     FutureDial.begin();
     RecordButton.begin();
     CrankMonitor.begin();
-    AltLever.addRange(0, 200);
-    AltLever.addRange(200, 400);
-    AltLever.addRange(400, 600);
-    AltLever.addRange(600, 800);
-    AltLever.begin();
-    pinMode(53, OUTPUT);
-    digitalWrite(53, HIGH);
 
-    Serial.println(F("#INPUT,Lever,Earth,Season,Mood,Future,Record,Crank"));
+    checkSettings();
+    printSettings();
+
+    Serial.println(F("# INPUT,Lever,Earth,Season,Mood,Future,Record,Crank"));
     WeatherReceiver.printFields();
     DBLN(F("E:setup"));
 }
 
 void loop()
 {
+
     if (DoEvery(UpdatePeriodMs, LastUpdateMs)) {
-        HeartBeat.update();
+        CommandHandler.update();
         WeatherReceiver.update();
+        HeartBeat.update();
         Lever.update();
         EarthDial.update();
         SeasonDial.update();
@@ -58,10 +67,9 @@ void loop()
         FutureDial.update();
         RecordButton.update();
         CrankMonitor.update();
-        AltLever.update();
     }
 
-    if (DoEvery(OutputPeriodMs, LastOutputMs)) {
+    if (DoEvery(InputDisplayPeriodMs.get(), LastInputDisplayMs)) {
         Serial.print(F("INPUT,"));
         Serial.print(Lever.position());
         Serial.print(',');

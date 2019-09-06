@@ -22,7 +22,7 @@ void WeatherReceiverClass::begin()
 
 void WeatherReceiverClass::printFields()
 {
-	Serial.println("#WEATHER,temperatureC,moisture,windSpeedMs,rainFallMmMinute,rainFallMmHour,rainFallMmDay");
+	Serial.println("# WEATHER,temperatureC,moisture,windSpeedMs,rainFallMmMinute,rainFallMmHour,rainFallMmDay");
 }
 
 void WeatherReceiverClass::update()
