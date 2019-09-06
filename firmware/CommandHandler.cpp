@@ -1,6 +1,7 @@
 #include <MutilaDebug.h>
 #include "CommandHandler.h"
 #include "Settings.h"
+#include "RecordIndicator.h"
 #include "Config.h"
 
 void CommandHandlerClass::runCmd()
@@ -19,6 +20,7 @@ void CommandHandlerClass::runCmd()
         _stream->println(F("# settings   - print current settings"));
         _stream->println(F("# reset      - reset default settings"));
         _stream->println(F("# input [ms] - set input update interval in milliseconds"));
+        _stream->println(F("# rec [mode] - set the mode of the recording indicator (on, off, [quick|slow]flash)"));
     } else if (cmd == "settings") {
 		printSettings();
     } else if (cmd == "reset") {
@@ -33,6 +35,23 @@ void CommandHandlerClass::runCmd()
 		} else {
 			InputDisplayPeriodMs.save();
 			_stream->println("# OK");
+		}
+    } else if (cmd == "rec") {
+		String arg(_buf + i);
+		if (arg == "on") {
+			RecordIndicator.setMode(Heartbeat::On);
+		} else if (arg == "off") {
+			RecordIndicator.setMode(Heartbeat::Off);
+		} else if (arg == "flash") {
+			RecordIndicator.setMode(Heartbeat::Normal);
+		} else if (arg == "slowflash") {
+			RecordIndicator.setMode(Heartbeat::Slow);
+		} else if (arg == "quickflash") {
+			RecordIndicator.setMode(Heartbeat::Quick);
+		} else {
+			_stream->print(F("# ERROR: invalid argument to rec command: '"));
+			_stream->print(arg);
+			_stream->println('\'');
 		}
     } else {
         _stream->print(F("# ERROR: invalid command: '"));

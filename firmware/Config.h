@@ -19,6 +19,7 @@ const uint8_t MoodDialPins[] 				= { 34, 35, 36, 37, 38, 39, 40, 41 };
 const uint8_t FutureDialPins[]				= { 42, 43, 44, 45, 46, 47, 48, 49 };
 const uint8_t RecordButtonPin				= 50;
 const uint8_t CrankSensorPin				= 51;
+const uint8_t RecordIndicatorPin			= 52;
 
 // Change to force reset of saved settings
 const uint16_t SettingsMagicNumber 			= 0xADDA;  

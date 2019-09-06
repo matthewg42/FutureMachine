@@ -90,4 +90,5 @@ Textual commands may be sent to the device over USB serial at 115200. Valid comm
 * `settings` - display the currrent persistent settings (those which are saved to EEPROM)
 * `reset` - reset factory detail settings and save to EEPROM
 * `input [ms]` - change the period the INPUT record is displayed (parameter in milliseconds)
+* `rec [mode]` - set the record indicator LED mode (on, off, flash, quickflash, slowflash)
 

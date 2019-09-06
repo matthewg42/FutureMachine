@@ -22,10 +22,11 @@
 #include "CrankMonitor.h"
 #include "WeatherReceiver.h"
 #include "CommandHandler.h"
+#include "RecordIndicator.h"
 #include "Settings.h"
 
 // Globals for timers
-uint16_t UpdatePeriodMs = 20;
+uint16_t UpdatePeriodMs = 5;
 uint32_t LastUpdateMs = 0;
 uint32_t LastInputDisplayMs = 0;
 
@@ -44,6 +45,8 @@ void setup()
     FutureDial.begin();
     RecordButton.begin();
     CrankMonitor.begin();
+    RecordIndicator.begin();
+    RecordIndicator.setMode(Heartbeat::Off);
 
     checkSettings();
     printSettings();
@@ -67,6 +70,7 @@ void loop()
         FutureDial.update();
         RecordButton.update();
         CrankMonitor.update();
+        RecordIndicator.update();
     }
 
     if (DoEvery(InputDisplayPeriodMs.get(), LastInputDisplayMs)) {
