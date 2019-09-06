@@ -14,7 +14,7 @@ void CommandHandlerClass::runCmd()
     
 	// cmd is the first word of the command
     if (cmd == "help") {
-        _stream->println(F("# Commands:"));
+        _stream->println(F("\n# Commands:"));
         _stream->println(F("# help       - this cruft"));
         _stream->println(F("# settings   - print current settings"));
         _stream->println(F("# reset      - reset default settings"));
@@ -24,9 +24,7 @@ void CommandHandlerClass::runCmd()
     } else if (cmd == "reset") {
 		resetSettings();
     } else if (cmd == "input") {
-        _stream->print(F("# Setting input update to: '"));
 		String arg(_buf + i);
-        _stream->print(arg);
 		bool ok = InputDisplayPeriodMs.set(arg.toInt());
 		if (!ok) {
 			_stream->print(F("# ERROR: invalid argument to input command: '"));
