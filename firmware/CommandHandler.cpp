@@ -3,6 +3,7 @@
 #include "Settings.h"
 #include "RecordIndicator.h"
 #include "Config.h"
+#include "Format.h"
 
 void CommandHandlerClass::runCmd()
 {
@@ -18,11 +19,14 @@ void CommandHandlerClass::runCmd()
         _stream->println(F("\n# Commands:"));
         _stream->println(F("# help       - this cruft"));
         _stream->println(F("# settings   - print current settings"));
+        _stream->println(F("# formats    - print record formats"));
         _stream->println(F("# reset      - reset default settings"));
         _stream->println(F("# input [ms] - set input update interval in milliseconds"));
         _stream->println(F("# rec [mode] - set the mode of the recording indicator (on, off, [quick|slow]flash)"));
     } else if (cmd == "settings") {
 		printSettings();
+    } else if (cmd == "formats") {
+		printRecordFormats();
     } else if (cmd == "reset") {
 		resetSettings();
     } else if (cmd == "input") {

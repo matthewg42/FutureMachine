@@ -12,14 +12,15 @@ const uint8_t WeatherPacketMagic[]      	= { 0x12, 0x13 };
 // Pins
 const uint8_t HC12SetPin					= 2;
 const uint8_t HeartbeatPin	    			= 13;
-const uint8_t LeverPins[] 					= { 22, 23, 24 };
-const uint8_t EarthDialPins[] 				= { 26, 27, 28, 29 };
-const uint8_t SeasonDialPins[] 				= { 30, 31, 32, 33 };
-const uint8_t MoodDialPins[] 				= { 34, 35, 36, 37, 38, 39, 40, 41 };
-const uint8_t FutureDialPins[]				= { 42, 43, 44, 45, 46, 47, 48, 49 };
-const uint8_t RecordButtonPin				= 50;
-const uint8_t CrankSensorPin				= 51;
-const uint8_t RecordIndicatorPin			= 52;
+const uint8_t LeverPins[] 					= { 26, 27, 28 };
+const uint8_t EarthDialPins[] 				= { 29, 30, 31, 32 };
+const uint8_t SeasonDialPins[] 				= { 33, 34, 35, 36 };
+const uint8_t FutureDialPins[]				= { 37, 38, 39, 40, 41, 42, 43, 44 };
+const uint8_t RecordButtonPin				= 45;
+const uint8_t CrankSensorPin				= 46;
+const uint8_t RecordIndicatorPin			= 47;
+const uint8_t MoodDialPin					= A0;
+const int MoodRanges[]                      = { 0, 8, 153, 298, 443, 588, 733, 878, 1024 };
 
 // Change to force reset of saved settings
 const uint16_t SettingsMagicNumber 			= 0xADDA;  

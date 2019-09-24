@@ -24,6 +24,7 @@
 #include "CommandHandler.h"
 #include "RecordIndicator.h"
 #include "Settings.h"
+#include "Format.h"
 
 // Globals for timers
 uint16_t UpdatePeriodMs = 5;
@@ -51,8 +52,7 @@ void setup()
     checkSettings();
     printSettings();
 
-    Serial.println(F("# INPUT,Lever,Earth,Season,Mood,Future,Record,Crank"));
-    WeatherReceiver.printFields();
+    printRecordFormats();
     DBLN(F("E:setup"));
 }
 
@@ -74,21 +74,7 @@ void loop()
     }
 
     if (DoEvery(InputDisplayPeriodMs.get(), LastInputDisplayMs)) {
-        Serial.print(F("INPUT,"));
-        Serial.print(Lever.position());
-        Serial.print(',');
-        Serial.print(EarthDial.position());
-        Serial.print(',');
-        Serial.print(SeasonDial.position());
-        Serial.print(',');
-        Serial.print(MoodDial.position());
-        Serial.print(',');
-        Serial.print(FutureDial.position());
-        Serial.print(',');
-        Serial.print(RecordButton.on());
-        Serial.print(',');
-        Serial.print(CrankMonitor.on());
-        Serial.println();
+        printInputRecord();
     }
 
 }

@@ -1,6 +1,14 @@
 #pragma once
 
-#include "MultiThrowSwitch.h"
+#include <QuantizedPot.h>
 
-extern MultiThrowSwitch MoodDial;
+class MoodDialClass : public QuantizedPot {
+public:
+	MoodDialClass();
+	int8_t position() { return value(); }
+
+};
+
+extern MoodDialClass MoodDial;
+
 
