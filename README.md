@@ -5,7 +5,7 @@
 * Install the Arduino IDE 1.6.6 or later
     * Windows & Mac users may find a download link here: https://www.arduino.cc/en/Main/Software
     * Major Linux distros carry it in their software repositories, or the link above may be used
-    * From the library manager, install ''Mutila'' library: https://github.com/matthewg42/Mutila version 1.1.5 or later.
+    * From the library manager, install ''Mutila'' library: https://github.com/matthewg42/Mutila version 1.1.6 or later.
 
 ## Building Using the Arduino IDE
 

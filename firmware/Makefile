@@ -4,6 +4,12 @@ CPPFLAGS += -Wno-unused-variable -Wno-deprecated-declarations -Wno-cpp -Wno-writ
 # Add flags for debugging and anything else we might have in our code...
 #CPPFLAGS += -DDEBUG
 
+# Disable the watchdog timer
+#CPPFLAGS += -DNOWATCHDOG
+
+# Flash the record indicator LED on boot
+CPPFLAGS += -DFLASHRECONBOOT
+
 # Each library used should be added here. Use the directory name for the library as
 # installed in your arduino libraries directory
 ARDUINO_LIBS = Mutila SoftwareSerial EEPROM
@@ -28,7 +34,8 @@ ARDUINO_LIBS = Mutila SoftwareSerial EEPROM
 #
 # Arduino MEGA 2560
 BOARD_TAG = mega
-BOARD_SUB = atmega2560
+#BOARD_SUB = atmega2560
+BOARD_SUB = atmega1280
 
 include ../arduino.mk
 

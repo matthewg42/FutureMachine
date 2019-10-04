@@ -5,6 +5,10 @@
 #include <EEPROM.h>
 #include <SoftwareSerial.h>
 
+#ifndef NOWATCHDOG
+#include <avr/wdt.h>
+#endif
+
 // Mutila includes
 #include <MutilaDebug.h>
 #include <Millis.h>
@@ -47,17 +51,36 @@ void setup()
     RecordButton.begin();
     CrankMonitor.begin();
     RecordIndicator.begin();
+
+    // Visual indicator that arduino is restarting
+#ifdef FLASHRECONBOOT
+    RecordIndicator.setMode(Heartbeat::Quick);
+    while (Millis() < 1000) {
+        RecordIndicator.update();
+    }
+#endif
     RecordIndicator.setMode(Heartbeat::Off);
 
     checkSettings();
     printSettings();
 
     printRecordFormats();
+
+#ifndef NOWATCHDOG
+    // Enable watchdog
+    // WDTO_15MS WDTO_30MS WDTO_60MS WDTO_120MS WDTO_250MS WDTO_500MS WDTO_1S WDTO_2S WDTO_4S WDTO_8S
+    wdt_enable(WDTO_120MS);
+#endif
+
     DBLN(F("E:setup"));
 }
 
 void loop()
 {
+#ifndef NOWATCHDOG
+    // Feed the watchdog
+    wdt_reset();
+#endif
 
     if (DoEvery(UpdatePeriodMs, LastUpdateMs)) {
         CommandHandler.update();
